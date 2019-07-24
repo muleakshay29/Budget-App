@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Show it is fixed to the top */
+body {
+    /* min-height: 75rem; */
+    padding-top: 3.5rem;
+  }
+
+  .bottom-right-button {
+    right: 0;
+    bottom: 0;
+  }

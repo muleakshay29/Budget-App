@@ -1,0 +1,28 @@
+<div class="my-3 p-3 bg-white rounded shadow-lg">
+
+  <div class="media text-muted pt-3" *ngFor="let category of returnedArray">
+    <div class="mr-2 rounded text-dark" *ngIf="category.Category_icon == NULL || category.Category_icon === ''">
+      <i class="fas fa-flag"></i>
+    </div>
+
+    <div class="mr-2 rounded text-dark" *ngIf="category.Category_icon != NULL || category.Category_icon !== ''">
+      <i class="{{ category.Category_icon }}"></i>
+    </div>
+
+    <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <a routerLink="/add-category/{{ category.Category_id }}" href="javascript:void(0)"
+          style="text-decoration: none;">
+          <strong class="text-gray-dark">{{ category.Category_name }}</strong>
+        </a>
+
+        <a (click)="categoryDelete(category.Category_id)" href="javascript:void(0)">
+          <i class="fas fa-times text-dark"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <pagination class="pagination-sm justify-content-center mt-2" [totalItems]="totalItems" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"></pagination>
+
+</div>

@@ -1,0 +1,35 @@
+<div class="my-3 bg-white rounded shadow-lg">
+  <div *ngFor="let trans of budgetList">
+    <div class="media text-muted p-3" [ngClass]="{
+      'alert-success': trans.IncomeExpense_flag === 0,
+      'alert-danger': trans.IncomeExpense_flag === 1
+    }">
+
+      <div class="mr-2 rounded text-dark">
+        <i class="fas fa-money-bill-alt"></i>
+      </div>
+
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-dark">
+        <div class="row">
+          <div class="col text-dark" routerLink="/add-expense/{{ trans._id }}" style="cursor: pointer;">
+            <strong class="text-gray-dark">{{ trans.Description }}</strong> <br />
+            <span class="text-dark">{{ trans.Transaction_date | date:'longDate' }}</span>
+          </div>
+
+          <div class="col text-dark text-center" routerLink="/add-expense/{{ trans._id }}"
+            style="cursor: pointer;">
+            <strong class="text-gray-dark" *ngIf="trans.IncomeExpense_flag === 0">+&#x20b9; {{ trans.Amount }}</strong>
+            <strong class="text-gray-dark" *ngIf="trans.IncomeExpense_flag === 1">-&#x20b9; {{ trans.Amount }}</strong>
+          </div>
+
+          <div class="col text-dark text-right">
+            <a (click)="budgetDelete(trans._id)" href="javascript:void(0)">
+              <i class="fas fa-times text-dark"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

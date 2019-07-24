@@ -1,0 +1,33 @@
+<main role="main" class="container my-4">
+  <div class="card shadow-lg">
+    <div class="card-body">
+
+      <form [formGroup]="addCategory" (ngSubmit)="onAddCategory()">
+        <div class="form-group">
+          <label for="amount">Category Name</label>
+          <input type="text" class="form-control" placeholder="Category Name" formControlName="Category_name">
+          <error-msg [control]="Category_name"></error-msg>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Category Icon</label>
+          <input type="text" class="form-control" placeholder="Category Icon" formControlName="Category_icon">
+        </div>
+
+        <div class="form-group text-center">
+          <button *ngIf="addFlag" type="submit" class="btn btn-primary m-1" [disabled]="!addCategory.valid">Add</button>
+
+          <button *ngIf="updateFlag" type="submit" class="btn btn-primary m-1" [disabled]="!addCategory.valid">Update</button>
+
+          <button *ngIf="!popUpFlag" type="button" class="btn btn-warning m-1" (click)="onCancel()">Cancel</button>
+
+          <button *ngIf="popUpFlag" type="button" class="btn btn-danger m-1" (click)="hideModel()">Close</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <app-category-list *ngIf="categoryList && !popUpFlag" [categoryList]="categoryList" (deleteCategory)="deleteCategory($event)">
+  </app-category-list>
+</main>

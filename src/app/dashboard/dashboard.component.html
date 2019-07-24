@@ -1,0 +1,51 @@
+<main role="main">
+
+  <section class="jumbotron text-center rounded-0">
+    <div class="container">
+      <div class="progress mb-3">
+        <div class="progress-bar bg-success" role="progressbar" [style.width.%]="incomePercent"
+          [attr.aria-valuenow]="incomePercent" aria-valuemin="0" aria-valuemax="100">Income</div>
+        <div class="progress-bar bg-danger" role="progressbar" [style.width.%]="expensePercent"
+          [attr.aria-valuenow]="expensePercent" aria-valuemin="0" aria-valuemax="100">Expense</div>
+      </div>
+
+      <h3 class="jumbotron-heading">Balance</h3>
+      <p class="lead text-muted font-weight-bold">&#x20b9; {{ totalBudget }}</p>
+
+      <div class="alert alert-success" role="alert">
+        <div class="row">
+          <div class="col">INCOME</div>
+          <div class="col">+&#x20b9; {{ totalIncome }}</div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger" role="alert">
+        <div class="row">
+          <div class="col">EXPENSE</div>
+          <div class="col">-&#x20b9; {{ totalExpense }}</div>
+        </div>
+      </div>
+
+      <form [formGroup]="changeDate">
+        <div class="form-group">
+          <input type="text" (blur)="fetchDateRecord();" class="form-control text-center border-0 w-25 mx-auto"
+            [bsConfig]="{ dateInputFormat: 'MMMM YYYY', minMode: minMode }" bsDatepicker formControlName="selectDate">
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <section class="container">
+    <app-transaction-list [budgetList]="incomeExpenseList" (deleteBudget)="deleteExpense($event)">
+    </app-transaction-list>
+  </section>
+
+  <div class="bottom-right-button position-fixed m-2">
+    <button type="button" routerLink="/add-expense" class="btn btn-info rounded-circle" popover="Add Expense OR Income"
+      triggers="mouseenter:mouseleave">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+
+</main>
