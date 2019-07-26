@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   isDropup = true;
   currentDate = new Date();
   changeDate: FormGroup;
+  newData: Date;
 
   bsValue: any = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
   minMode: BsDatepickerViewMode = 'month';
@@ -38,26 +39,25 @@ export class DashboardComponent implements OnInit {
       selectDate: [new Date()]
     });
 
-    this.getIncomeExpenseList();
+    // this.getIncomeExpenseList();
   }
 
   get selectDate() {
     return this.changeDate.get('selectDate');
   }
 
-  getIncomeExpenseListTest(selectedDate) {
-    console.log(selectedDate);
+  /* getIncomeExpenseListTest(selectedDate) {
     const data = {
       selectedDate: selectedDate
     }
     this.expenseService.getIncomeExpenseListTest(data)
       .subscribe();
-  }
+  } */
 
-  getIncomeExpenseList() {
-    this.expenseService.getIncomeExpenseList()
+  getIncomeExpenseList(budgetList) {
+    /* this.expenseService.getIncomeExpenseList()
       .subscribe((budgetList) => {
-        console.log(budgetList)
+        // console.log(budgetList)
         // const allBudget = budgetList.budgetData;
         const allBudget = budgetList;
         this.incomeExpenseList = budgetList;
@@ -76,7 +76,26 @@ export class DashboardComponent implements OnInit {
 
         this.expensePercent = Math.round((this.totalExpense / this.totalIncome) * 100);
         this.incomePercent = Math.round((this.totalBudget / this.totalIncome) * 100);
-      });
+      }); */
+
+    const allBudget = budgetList;
+    this.incomeExpenseList = budgetList;
+    this.totalIncome = 0, this.totalExpense = 0, this.expensePercent = 0, this.incomePercent = 0, this.totalBudget = 0;
+
+    allBudget.forEach(ele => {
+      if (ele.IncomeExpense_flag == 0) {
+        this.totalIncome += ele.Amount;
+      }
+      else {
+        this.totalExpense += ele.Amount;
+      }
+    });
+
+    this.totalBudget = this.totalIncome - this.totalExpense;
+    if (this.totalBudget <= 0) { this.totalBudget = 0; }
+
+    this.expensePercent = Math.round((this.totalExpense / this.totalIncome) * 100);
+    this.incomePercent = Math.round((this.totalBudget / this.totalIncome) * 100);
 
     this.progressStack.push({
       value: this.incomePercent,
@@ -92,13 +111,19 @@ export class DashboardComponent implements OnInit {
   deleteExpense(Budget_id) {
     this.expenseService.deleteBudget(Budget_id).subscribe(() => {
       this.totalBudget = 0; this.totalIncome = 0; this.totalExpense = 0;
-      this.getIncomeExpenseList();
+      // this.getIncomeExpenseList();
     });
   }
 
-  fetchDateRecord() {
-    // console.log(this.selectDate.value);
-    this.getIncomeExpenseListTest(this.selectDate.value);
+  fetchDateRecord(value: Date) {
+    this.newData = value;
+    const smonth = this.newData.getMonth() < 10 ? `0${this.newData.getMonth() + 1}` : `${this.newData.getMonth()}`;
+    const syear = this.newData.getFullYear();
+    const startDate = `${syear}-${smonth}-01`;
+    this.expenseService.getIncomeExpenseList(startDate).subscribe(data => {
+      // console.log(data)
+      this.getIncomeExpenseList(data);
+    })
   }
 
 }

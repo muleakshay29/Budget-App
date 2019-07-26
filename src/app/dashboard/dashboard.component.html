@@ -28,7 +28,7 @@
 
       <form [formGroup]="changeDate">
         <div class="form-group">
-          <input type="text" (blur)="fetchDateRecord();" class="form-control text-center border-0 w-25 mx-auto"
+          <input type="text" (bsValueChange)="fetchDateRecord($event);" class="form-control text-center border-0 w-25 mx-auto"
             [bsConfig]="{ dateInputFormat: 'MMMM YYYY', minMode: minMode }" bsDatepicker formControlName="selectDate">
         </div>
       </form>

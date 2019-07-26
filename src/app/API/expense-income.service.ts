@@ -31,25 +31,24 @@ export class ExpenseIncomeService {
       );
   }
 
-  getIncomeExpenseList(): Observable<any> {
+  /* getIncomeExpenseList(): Observable<any> {
     // const URL = `${this.API_URL}expense`;
     const URL = `${this.API_URL}expense`;
     return this.http.get<any>(URL, httpOptions)
       .pipe(catchError(this.handleError<any>('getList'))
       );
-  }
+  } */
 
-  getIncomeExpenseListTest(data): Observable<any> {
-    const URL = `${this.API_URL}fetchByDate`;
-    console.log(URL);
-    return this.http.post<any>(URL, data, httpOptions)
-      .pipe(catchError(this.handleError<any>('getList'))
+  getIncomeExpenseList(startDate): Observable<any> {
+    const URL = `${this.API_URL}expense/${startDate}`;
+    return this.http.get<any>(URL, httpOptions)
+      .pipe(catchError(this.handleError<any>('getIncomeExpenseListTest'))
       );
   }
 
   getBudgetDetails(budgetId): Observable<any> {
     // const URL = `${this.API_URL}getBudgetDetails/${budgetId}`;
-    const URL = `${this.API_URL}expense/${budgetId}`;
+    const URL = `${this.API_URL}expense-details/${budgetId}`;
     return this.http.get<any>(URL, httpOptions)
       .pipe(tap((expense) => console.log(`Expense w/ Description=${budgetId}`)),
         catchError(this.handleError<any>('addBudget'))

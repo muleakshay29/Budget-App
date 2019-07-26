@@ -77,7 +77,6 @@ export class AddExpenseComponent implements OnInit {
 
   onAddExpense() {
     const formData = this.addExpense.value;
-    console.log(formData)
     if (this.expenseId == null) {
       this.expenseService.addExpense(formData).subscribe((data: {}) => {
         this.router.navigate(['/dashboard']);
